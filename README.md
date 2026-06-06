@@ -295,6 +295,11 @@ jobs:
   terraform:
     name: Terraform Workflow
     runs-on: ubuntu-latest
+    
+    # 🌟 This forces ALL steps in this job to run inside the terraform directory
+    defaults:
+      run:
+        working-directory: ./terraform
 
     steps:
       - name: Checkout repository
@@ -303,7 +308,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.6.6
+          terraform_version: 1.15.5
 
       - name: Terraform Init
         run: terraform init
@@ -332,6 +337,11 @@ jobs:
     needs: terraform
     name: Deploy Docker Compose
     runs-on: ubuntu-latest
+    
+    # 🌟 Do the same for the Docker job to point to your monitoring folder
+    defaults:
+      run:
+        working-directory: ./prometheus_grafana
 
     steps:
       - name: Checkout repository
@@ -344,7 +354,7 @@ jobs:
         uses: docker/setup-compose-action@v1
 
       - name: Deploy Compose file
-        run: docker compose -f prometheus-garfana.yml up -d
+        run: docker compose up -d
 
       - name: Deploy Successfully
         run: echo "deployed"
