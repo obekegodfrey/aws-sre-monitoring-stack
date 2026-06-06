@@ -1,0 +1,88 @@
+# ==========================================
+# Production-Grade .gitignore for SRE Stack
+# Infrastructure: AWS, Terraform, Docker, Grafana
+# ==========================================
+
+# ------------------------------------------
+# Terraform & OpenTofu
+# ------------------------------------------
+# Core local configuration directories
+**/.terraform/
+
+# Local state files and state backups (State contains secrets, use remote backend instead!)
+*.tfstate
+*.tfstate.*
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Exclude all variable files containing sensitive secrets
+*.tfvars
+*.tfvars.json
+
+# Override files (local developer configurations)
+*.override.tf
+*.override.tf.json
+
+# CLI configuration files
+.terraformrc
+terraform.rc
+
+# ------------------------------------------
+# Docker & Monitoring Containers
+# ------------------------------------------
+# Embedded application data volumes / local TSDB persistence
+**/prometheus_data/
+**/grafana_data/
+**/grafana/data/
+**/prometheus/data/
+
+# Docker overrides and general application logs
+*.log
+docker-compose.override.yml
+
+# ------------------------------------------
+# Credentials, Secrets, & Environment
+# ------------------------------------------
+# Local AWS configuration and credentials mirror (if any)
+.aws/
+.aws-sam/
+
+# Encryption keys and explicit local environment files
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.pub
+secrets.xml
+
+# ------------------------------------------
+# Operating System & IDE Overrides
+# ------------------------------------------
+# macOS System Files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows System Files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# JetBrains IDEs (.idea)
+.idea/
+*.iml
+
+# Visual Studio Code (.vscode)
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+
+# Backup/Temporary files
+*~
+*.bak
+*.swp
+*.tmp
